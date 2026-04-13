@@ -1,0 +1,640 @@
+.lobby-page .page-shell {
+  display: grid;
+  gap: 16px;
+}
+
+.logo-stack {
+  display: grid;
+  gap: 14px;
+  justify-items: center;
+}
+
+.category-row {
+  min-height: 88px;
+}
+
+.utility-row {
+  min-height: 72px;
+}
+
+.category-slot,
+.icon-button {
+  position: relative;
+  overflow: hidden;
+  border: 3px solid #000;
+  box-shadow:
+    inset 2px 2px 0 rgba(255, 255, 255, 0.18),
+    inset -2px -2px 0 rgba(0, 0, 0, 0.38),
+    0 6px 16px rgba(0, 0, 0, 0.28);
+  background: linear-gradient(180deg, rgba(14, 15, 20, 0.94), rgba(6, 7, 10, 0.98));
+  transition: transform 0.08s steps(2), filter 0.12s linear, opacity 0.12s linear;
+}
+
+.category-slot:hover,
+.icon-button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.category-slot:active,
+.icon-button:active {
+  transform: translateY(1px);
+}
+
+.category-slot::before,
+.icon-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 34%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03), transparent 18%, transparent 82%, rgba(0, 0, 0, 0.08));
+}
+
+.category-slot {
+  width: 92px;
+  min-height: 88px;
+  padding: 10px 8px 8px;
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  gap: 6px;
+}
+
+.category-slot:disabled {
+  cursor: not-allowed;
+}
+
+.category-slot.active {
+  box-shadow:
+    inset 2px 2px 0 rgba(255, 255, 255, 0.18),
+    inset -2px -2px 0 rgba(0, 0, 0, 0.42),
+    0 0 0 3px var(--accent),
+    0 8px 18px rgba(0, 0, 0, 0.32);
+}
+
+.category-slot.complete {
+  background: linear-gradient(180deg, rgba(61, 44, 10, 0.95), rgba(32, 23, 5, 0.98));
+}
+
+.category-slot.locked {
+  opacity: 0.58;
+  filter: grayscale(1);
+}
+
+.category-slot-icon {
+  width: 34px;
+  height: 34px;
+  margin-top: 8px;
+}
+
+.category-slot-label {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.92);
+  text-align: center;
+}
+
+.icon-button {
+  width: 116px;
+  min-height: 64px;
+  padding: 8px 8px 6px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 5px;
+}
+
+.icon-button-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.icon-button-label {
+  font-size: 0.66rem;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.info-board {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(260px, 0.8fr);
+  gap: 20px;
+  padding: 20px;
+  align-items: center;
+}
+
+.board-copy {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.board-eyebrow {
+  margin: 0;
+  color: var(--gold-text);
+  font-size: 0.96rem;
+}
+
+.board-title {
+  margin: 0;
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
+  line-height: 1.1;
+}
+
+.board-subtitle,
+.board-intro {
+  margin: 0;
+  color: var(--mc-gui-subtext);
+  line-height: 1.6;
+}
+
+.board-stats {
+  display: grid;
+  gap: 12px;
+}
+
+.stat-slot {
+  padding: 14px 16px;
+  background: linear-gradient(180deg, rgba(8, 9, 12, 0.94), rgba(4, 5, 7, 0.96));
+  border: 3px solid #000;
+  box-shadow:
+    inset 2px 2px 0 rgba(255, 255, 255, 0.12),
+    inset -2px -2px 0 rgba(0, 0, 0, 0.34);
+  display: grid;
+  gap: 6px;
+}
+
+.stat-label {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.82rem;
+}
+
+.stat-value {
+  font-size: 1.18rem;
+  color: #fff;
+}
+
+.craft-board {
+  padding: 20px;
+  display: grid;
+  gap: 14px;
+}
+
+.tree-stage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.tree-meta {
+  display: grid;
+  gap: 4px;
+}
+
+.tree-meta p {
+  margin: 0;
+}
+
+.tree-meta-copy {
+  color: var(--mc-gui-subtext);
+  line-height: 1.5;
+}
+
+.tree-toggle {
+  min-width: 180px;
+}
+
+.tree-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 90px minmax(280px, 320px);
+  gap: 16px;
+  align-items: center;
+}
+
+.tree-stage {
+  position: relative;
+  min-height: 420px;
+  overflow: hidden;
+  background: var(--mc-gui-fill);
+  border: 4px solid var(--mc-gui-border);
+  box-shadow:
+    inset 4px 4px 0 var(--mc-gui-highlight),
+    inset -4px -4px 0 var(--mc-gui-shadow),
+    0 6px 18px rgba(0, 0, 0, 0.22);
+}
+
+.tree-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07), transparent 18%),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.06), transparent 26%),
+    var(--panel-tile) center / 196px auto repeat;
+  opacity: 0.7;
+}
+
+.tree-stage-scroll {
+  position: relative;
+  min-height: 420px;
+  height: 420px;
+  padding: 18px;
+  overflow: auto;
+  z-index: 1;
+}
+
+.tree-stage[data-open="false"] .tree-stage-scroll {
+  filter: blur(1px) brightness(0.72);
+}
+
+.tree-stage-scroll::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+
+.tree-stage-scroll::-webkit-scrollbar-thumb {
+  background: #777;
+  border: 2px solid #222;
+}
+
+.tree-stage-scroll::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.tree-canvas {
+  position: relative;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.tree-links {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.tree-link-shadow,
+.tree-link-core {
+  fill: none;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+
+.tree-link-shadow {
+  stroke: rgba(0, 0, 0, 0.88);
+  stroke-width: 12;
+}
+
+.tree-link-core {
+  stroke: #5b5b5b;
+  stroke-width: 6;
+}
+
+.tree-link-core.complete {
+  stroke: #c59312;
+}
+
+.tree-node {
+  position: absolute;
+  width: 134px;
+  min-height: 152px;
+  padding: 10px 8px 8px;
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  gap: 8px;
+  border: 4px solid var(--mc-gui-border);
+  box-shadow:
+    inset 3px 3px 0 var(--mc-gui-highlight),
+    inset -3px -3px 0 var(--mc-gui-shadow),
+    0 8px 14px rgba(0, 0, 0, 0.22);
+  background: var(--mc-gui-fill);
+  color: var(--mc-gui-text);
+  transform: translate3d(0, 0, 0);
+}
+
+.tree-node.open {
+  background: var(--mc-gui-fill);
+}
+
+.tree-node.complete {
+  background: var(--mc-gui-complete-fill);
+  color: #241802;
+  box-shadow:
+    inset 3px 3px 0 var(--mc-gui-complete-highlight),
+    inset -3px -3px 0 var(--mc-gui-complete-shadow),
+    0 8px 14px rgba(0, 0, 0, 0.22);
+}
+
+.tree-node.selected {
+  box-shadow:
+    inset 3px 3px 0 rgba(255, 255, 255, 0.95),
+    inset -3px -3px 0 rgba(0, 0, 0, 0.42),
+    0 0 0 4px var(--accent),
+    0 8px 18px rgba(0, 0, 0, 0.3);
+}
+
+.tree-node-index {
+  width: 100%;
+  font-size: 0.68rem;
+  text-align: left;
+}
+
+.tree-node-art {
+  position: relative;
+  width: 74px;
+  height: 74px;
+}
+
+.tree-node-frame,
+.tree-node-icon {
+  position: absolute;
+}
+
+.tree-node-frame {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.tree-node-icon {
+  width: 30px;
+  height: 30px;
+  left: calc(50% - 15px);
+  top: calc(50% - 15px);
+}
+
+.tree-node-label {
+  font-size: 0.78rem;
+  line-height: 1.35;
+  text-align: center;
+  word-break: keep-all;
+}
+
+.tree-node-state {
+  font-size: 0.62rem;
+  color: rgba(0, 0, 0, 0.58);
+}
+
+.tree-node.complete .tree-node-state {
+  color: rgba(36, 24, 2, 0.72);
+}
+
+.tree-empty {
+  display: grid;
+  place-items: center;
+  min-height: 100%;
+  padding: 32px;
+  color: var(--mc-gui-subtext);
+  text-align: center;
+  line-height: 1.6;
+}
+
+.tree-door {
+  position: absolute;
+  inset: 12px;
+  z-index: 3;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 14px;
+  padding: 24px;
+  background: linear-gradient(180deg, rgba(20, 21, 28, 0.96), rgba(8, 9, 12, 0.98));
+  border: 4px solid #000;
+  box-shadow:
+    inset 4px 4px 0 rgba(255, 255, 255, 0.06),
+    inset -4px -4px 0 rgba(0, 0, 0, 0.34);
+  text-align: center;
+  transition: transform 0.24s steps(6), opacity 0.18s linear, visibility 0.18s linear;
+}
+
+.tree-door::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 22%),
+    var(--panel-tile) center / 180px auto repeat;
+  opacity: 0.22;
+}
+
+.tree-stage[data-open="true"] .tree-door {
+  transform: translateY(-108%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.tree-door-art,
+.tree-door-title,
+.tree-door-body,
+.tree-door-action {
+  position: relative;
+  z-index: 1;
+}
+
+.tree-door-slot {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  background: var(--mc-gui-fill);
+  border: 4px solid var(--mc-gui-border);
+  box-shadow:
+    inset 4px 4px 0 var(--mc-gui-highlight),
+    inset -4px -4px 0 var(--mc-gui-shadow),
+    0 10px 18px rgba(0, 0, 0, 0.24);
+}
+
+.tree-door-frame,
+.tree-door-icon {
+  position: absolute;
+}
+
+.tree-door-frame {
+  inset: 20px;
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+  filter: grayscale(0.08);
+}
+
+.tree-door-icon {
+  width: 42px;
+  height: 42px;
+  left: calc(50% - 21px);
+  top: calc(50% - 21px);
+}
+
+.tree-door-title {
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+.tree-door-body {
+  max-width: 360px;
+  color: rgba(255, 255, 255, 0.84);
+  line-height: 1.6;
+}
+
+.tree-door-action {
+  color: var(--gold-text);
+  font-size: 0.78rem;
+}
+
+.craft-arrow {
+  position: relative;
+  width: 88px;
+  height: 112px;
+}
+
+.craft-arrow::before,
+.craft-arrow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 40%, 50% 40%, 50% 18%, 100% 50%, 50% 82%, 50% 60%, 0 60%);
+}
+
+.craft-arrow::before {
+  background: rgba(0, 0, 0, 0.8);
+  transform: translate(4px, 4px);
+}
+
+.craft-arrow::after {
+  background: var(--mc-gui-fill);
+  box-shadow:
+    inset 3px 3px 0 var(--mc-gui-highlight),
+    inset -3px -3px 0 var(--mc-gui-shadow);
+}
+
+.result-panel {
+  min-height: 420px;
+  display: grid;
+  align-content: center;
+  gap: 18px;
+  justify-items: center;
+  padding: 20px 0;
+}
+
+.result-slot {
+  position: relative;
+  width: 154px;
+  height: 154px;
+  background: var(--mc-gui-fill);
+  border: 4px solid var(--mc-gui-border);
+  box-shadow:
+    inset 4px 4px 0 var(--mc-gui-highlight),
+    inset -4px -4px 0 var(--mc-gui-shadow),
+    0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.selected-frame,
+.selected-icon {
+  position: absolute;
+}
+
+.selected-frame {
+  inset: 20px;
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+}
+
+.selected-icon {
+  width: 42px;
+  height: 42px;
+  left: calc(50% - 21px);
+  top: calc(50% - 21px);
+}
+
+.selected-copy {
+  width: min(100%, 300px);
+  display: grid;
+  gap: 8px;
+  text-align: center;
+}
+
+.selected-state {
+  margin: 0;
+  color: var(--gold-text);
+  font-size: 0.82rem;
+}
+
+.selected-title {
+  margin: 0;
+  font-size: 1.2rem;
+  line-height: 1.35;
+}
+
+.selected-description,
+.selected-lock {
+  margin: 0;
+  color: var(--mc-gui-subtext);
+  line-height: 1.55;
+}
+
+#selected-enter {
+  width: min(100%, 240px);
+}
+
+@media (max-width: 1100px) {
+  .info-board {
+    grid-template-columns: 1fr;
+  }
+
+  .tree-layout {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .craft-arrow {
+    width: 112px;
+    height: 76px;
+    transform: rotate(90deg);
+  }
+
+  .result-panel {
+    min-height: auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 720px) {
+  .craft-board,
+  .info-board {
+    padding: 14px;
+  }
+
+  .tree-stage-header {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .tree-toggle {
+    width: 100%;
+  }
+
+  .tree-stage,
+  .tree-stage-scroll,
+  .result-panel {
+    min-height: 360px;
+  }
+
+  .tree-stage-scroll {
+    height: 360px;
+    padding: 14px;
+  }
+
+  .tree-node {
+    width: 122px;
+    min-height: 144px;
+  }
+
+  .tree-door {
+    inset: 8px;
+  }
+}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="../../">
+  <title>막대가 가루가 되면</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/question.css">
+</head>
+<body class="question-page">
+  <main class="page-shell" id="question-root">
+    <header class="top-strip" aria-label="문제 상단 바">
+      <div class="top-actions">
+        <a class="mc-button dark compact-button" href="index.html" data-interactive="true">LOBBY</a>
+      </div>
+      <img id="site-logo" class="site-logo pixel-art" src="assets/branding/logo-placeholder.png" alt="ARG 로고">
+      <div class="top-links">
+        <button class="mc-button dark compact-button" type="button" data-role="audio-toggle"><span data-role="audio-label">SOUND</span></button>
+      </div>
+    </header>
+
+    <section class="mc-panel title-board" aria-label="문제 개요">
+      <div class="title-art">
+        <img id="question-frame" class="pixel-art" src="assets/ui/task_open.png" alt="">
+        <img id="question-icon" class="pixel-art" src="assets/icons/campfire.png" alt="">
+      </div>
+      <div class="title-copy">
+        <p class="slot-kicker" id="question-category">CATEGORY</p>
+        <h1 id="question-title">막대가 가루가 되면</h1>
+        <p id="question-subtitle"></p>
+      </div>
+      <div class="timer-slot">
+        <span class="stat-label">TOTAL TIME</span>
+        <strong id="total-elapsed">00:00</strong>
+      </div>
+    </section>
+
+    <section class="solve-stage" aria-label="문제 풀이 영역">
+      <article class="mc-panel problem-panel">
+        <div class="problem-header">
+          <h2 class="problem-title">PUZZLE</h2>
+          <span class="status-pill">EDIT THIS HTML</span>
+        </div>
+        <div class="problem-content">
+          <section class="puzzle-card">
+  <h3>예시 문제</h3>
+  <p>앞 문제의 정답을 가공했을 때 얻는 아이템입니다. 양조와 엔드 관련 제작에 쓰이는 가루 형태의 이름을 맞혀 보세요.</p>
+</section>
+<section class="puzzle-card">
+  <h3>확장 예시</h3>
+  <p>이런 형태의 슬롯은 전 단계 정답을 활용한 후속 퍼즐로 바꾸기 좋습니다. 선행 페이지의 이미지나 텍스트를 재사용해도 됩니다.</p>
+</section>
+        </div>
+      </article>
+
+      <div class="craft-arrow question-arrow" aria-hidden="true"></div>
+
+      <aside class="mc-panel answer-panel">
+        <div class="answer-display">
+          <div class="answer-slot">
+            <img id="result-frame" class="pixel-art" src="assets/ui/task_open.png" alt="">
+            <img id="result-icon" class="pixel-art" src="assets/icons/campfire.png" alt="">
+          </div>
+          <h2 class="answer-title">ANSWER</h2>
+        </div>
+
+        <div id="locked-message" hidden></div>
+
+        <form class="answer-form" id="answer-form">
+          <label class="input-label" for="answer-input">정답 입력</label>
+          <input class="mc-input" id="answer-input" name="answer" type="text" autocomplete="off" placeholder="영문 또는 숫자 입력">
+          <div class="answer-actions">
+            <button class="mc-button gold" type="submit">SUBMIT</button>
+            <a class="mc-button blue" id="next-link" href="index.html" hidden>CHECK LOBBY</a>
+          </div>
+        </form>
+
+        <div class="feedback-board" id="feedback" hidden></div>
+      </aside>
+    </section>
+
+    <section class="mc-panel hint-rack" aria-label="힌트 패널">
+      <div class="hint-head">
+        <h2 class="hint-title">HINTS</h2>
+        <p id="hint-status">오답 0회</p>
+      </div>
+      <div id="hint-buttons"></div>
+      <div id="hint-output" hidden></div>
+    </section>
+  </main>
+
+  <script>window.CURRENT_QUESTION_ID = 'nether-2';</script>
+  <script src="js/game-data.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/question-page.js"></script>
+</body>
+</html>

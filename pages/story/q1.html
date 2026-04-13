@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="../../">
+  <title>균형 잡힌 식사</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/question.css">
+</head>
+<body class="question-page">
+  <main class="page-shell" id="question-root">
+    <header class="top-strip" aria-label="문제 상단 바">
+      <div class="top-actions">
+        <a class="mc-button dark compact-button" href="index.html" data-interactive="true">LOBBY</a>
+      </div>
+      <img id="site-logo" class="site-logo pixel-art" src="assets/branding/logo-placeholder.png" alt="ARG 로고">
+      <div class="top-links">
+        <button class="mc-button dark compact-button" type="button" data-role="audio-toggle"><span data-role="audio-label">SOUND</span></button>
+      </div>
+    </header>
+
+    <section class="mc-panel title-board" aria-label="문제 개요">
+      <div class="title-art">
+        <img id="question-frame" class="pixel-art" src="assets/ui/task_open.png" alt="">
+        <img id="question-icon" class="pixel-art" src="assets/icons/book.png" alt="">
+      </div>
+      <div class="title-copy">
+        <p class="slot-kicker" id="question-category">CATEGORY</p>
+        <h1 id="question-title">균형 잡힌 식사</h1>
+        <p id="question-subtitle"></p>
+      </div>
+      <div class="timer-slot">
+        <span class="stat-label">TOTAL TIME</span>
+        <strong id="total-elapsed">00:00</strong>
+      </div>
+    </section>
+
+    <section class="solve-stage" aria-label="문제 풀이 영역">
+      <article class="mc-panel problem-panel">
+        <div class="problem-header">
+          <h2 class="problem-title">PUZZLE</h2>
+          <span class="status-pill">MENU</span>
+        </div>
+        <div class="problem-content">
+          <section class="puzzle-card">
+            <h3>오늘의 메뉴</h3>
+            <ul>
+              <li>은어</li>
+              <li>오징어</li>
+              <li>소라</li>
+              <li>상어</li>
+            </ul>
+            <p>추가 메뉴: 참치</p>
+          </section>
+          <section class="puzzle-card">
+            <h3>내일의 메뉴</h3>
+            <ul>
+              <li>구아바</li>
+              <li>케이퍼</li>
+              <li>콩포트</li>
+              <li>멜론</li>
+              <li>빵</li>
+            </ul>
+            <p><strong>내일의 추가 메뉴는 무엇일까?</strong> 정답은 영어로 입력하세요.</p>
+          </section>
+        </div>
+      </article>
+
+      <div class="craft-arrow question-arrow" aria-hidden="true"></div>
+
+      <aside class="mc-panel answer-panel">
+        <div class="answer-display">
+          <div class="answer-slot">
+            <img id="result-frame" class="pixel-art" src="assets/ui/task_open.png" alt="">
+            <img id="result-icon" class="pixel-art" src="assets/icons/book.png" alt="">
+          </div>
+          <h2 class="answer-title">ANSWER</h2>
+        </div>
+
+        <div id="locked-message" hidden></div>
+
+        <form class="answer-form" id="answer-form">
+          <label class="input-label" for="answer-input">정답 입력</label>
+          <input class="mc-input" id="answer-input" name="answer" type="text" autocomplete="off" placeholder="영문 또는 숫자 입력">
+          <div class="answer-actions">
+            <button class="mc-button gold" type="submit">SUBMIT</button>
+            <a class="mc-button blue" id="next-link" href="index.html" hidden>CHECK LOBBY</a>
+          </div>
+        </form>
+
+        <div class="feedback-board" id="feedback" hidden></div>
+      </aside>
+    </section>
+
+    <section class="mc-panel hint-rack" aria-label="힌트 패널">
+      <div class="hint-head">
+        <h2 class="hint-title">HINTS</h2>
+        <p id="hint-status">오답 0회</p>
+      </div>
+      <div id="hint-buttons"></div>
+      <div id="hint-output" hidden></div>
+    </section>
+  </main>
+
+  <script>window.CURRENT_QUESTION_ID = 'story-1';</script>
+  <script src="js/game-data.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/question-page.js"></script>
+</body>
+</html>

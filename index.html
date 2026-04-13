@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minecraft Advancement ARG</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/lobby.css">
+</head>
+<body class="lobby-page">
+  <main class="page-shell" id="lobby-root">
+    <header class="logo-stack" aria-label="사이트 상단">
+      <img id="site-logo" class="site-logo pixel-art" src="assets/branding/logo-placeholder.png" alt="ARG 로고">
+      <div class="slot-row category-row" id="category-row" aria-label="카테고리 선택"></div>
+      <div class="slot-row utility-row" id="utility-row" aria-label="유틸리티 버튼"></div>
+    </header>
+
+    <section class="mc-panel info-board" aria-label="현재 카테고리 정보">
+      <div class="board-copy">
+        <p class="board-eyebrow" id="board-eyebrow">0/0 DISCOVERED</p>
+        <h1 class="board-title" id="category-title">카테고리</h1>
+        <p class="board-subtitle" id="category-subtitle"></p>
+        <p class="board-intro" id="board-intro"></p>
+      </div>
+      <div class="board-stats" aria-label="전체 진행 정보">
+        <div class="stat-slot">
+          <span class="stat-label">TOTAL TIME</span>
+          <strong class="stat-value" id="total-elapsed">00:00</strong>
+        </div>
+        <div class="stat-slot">
+          <span class="stat-label">CLEAR</span>
+          <strong class="stat-value" id="global-progress">0%</strong>
+        </div>
+        <div class="stat-slot">
+          <span class="stat-label">COUNT</span>
+          <strong class="stat-value" id="global-fraction">0/0 CLEARED</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="mc-panel craft-board" aria-label="문제 선택 패널">
+      <div class="tree-stage-header">
+        <div class="tree-meta">
+          <p class="minor-label">ADVANCEMENT TREE</p>
+          <p class="tree-meta-copy" id="tree-meta-copy">닫힌 틀을 열면 현재 해금된 슬롯만 트리로 표시됩니다.</p>
+        </div>
+        <button class="mc-button blue tree-toggle" id="tree-toggle" type="button" data-interactive="true">OPEN TREE</button>
+      </div>
+
+      <div class="tree-layout">
+        <div class="tree-stage" id="tree-stage" data-open="false" aria-label="문제 트리 패널">
+          <div class="tree-stage-scroll" id="tree-stage-scroll">
+            <svg class="tree-links" id="tree-links" aria-hidden="true"></svg>
+            <div class="tree-canvas" id="question-tree"></div>
+          </div>
+
+          <button class="tree-door" id="tree-door" type="button" data-interactive="true" aria-expanded="false">
+            <div class="tree-door-art">
+              <div class="tree-door-slot">
+                <img class="pixel-art tree-door-frame" id="tree-door-frame" src="assets/ui/task_open.png" alt="">
+                <img class="pixel-art tree-door-icon" id="tree-door-icon" src="assets/icons/book.png" alt="">
+              </div>
+            </div>
+            <strong class="tree-door-title" id="tree-door-title">SEALED FRAME</strong>
+            <span class="tree-door-body" id="tree-door-body">열어서 현재 진행 가능한 업적 트리를 확인하세요.</span>
+            <span class="tree-door-action">CLICK TO OPEN</span>
+          </button>
+        </div>
+
+        <div class="craft-arrow tree-arrow" aria-hidden="true"></div>
+
+        <aside class="result-panel" aria-label="선택된 문제 정보">
+          <div class="result-slot">
+            <img id="selected-frame" class="pixel-art selected-frame" src="assets/ui/task_open.png" alt="">
+            <img id="selected-icon" class="pixel-art selected-icon" src="assets/icons/book.png" alt="">
+          </div>
+          <div class="selected-copy">
+            <p class="selected-state" id="selected-state">SEALED</p>
+            <h2 class="selected-title" id="selected-title">닫힌 틀</h2>
+            <p class="selected-description" id="selected-description">닫힌 틀을 열면 현재 해금된 문제 트리와 선택한 슬롯의 상세 정보를 볼 수 있습니다.</p>
+            <p class="selected-lock" id="selected-lock"></p>
+          </div>
+          <a class="mc-button gold" id="selected-enter" href="#" data-interactive="true">ENTER PAGE</a>
+        </aside>
+      </div>
+    </section>
+
+    <p class="screen-note">로고 이미지는 <code>assets/branding/logo-placeholder.png</code>를 원하는 파일로 교체하면 됩니다.</p>
+  </main>
+
+  <script src="js/game-data.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/render-lobby.js"></script>
+</body>
+</html>
