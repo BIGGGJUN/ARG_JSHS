@@ -157,18 +157,18 @@
           },
           {
             id: 'story-2',
-            title: '손안의 해와 달',
-            shortTitle: 'CLOCK',
-            description: '시간의 흐름을 보여주는 아이템을 묻는 두 번째 예시 문제.',
+            title: '마법 부여자',
+            shortTitle: 'BOOK',
+            description: '인첸트된 단어의 비밀을 알아내는 두번째 문제.',
             file: 'pages/story/q2.html',
-            icon: ASSETS.icons.clock,
+            icon: ASSETS.icons.book,
             frameType: 'goal',
-            acceptedAnswers: ['CLOCK'],
+            acceptedAnswers: ['To be, or not to be'],
             prerequisiteIds: ['story-1'],
             hints: [
-              '하루의 흐름을 손안에서 확인하는 아이템입니다.',
-              '원형 바늘이 돌아가는 아이템입니다.',
-              '정답은 영어 5글자, CLOCK 입니다.'
+              '"정답"을 정답에 입력하세요',
+              '"정답"은 답이 될수 있지만, 정답은 답이 될수 없습니다.',
+              '당신의 눈을 믿지 마세요. 보이는대로 입력하는게 아닌 완전 동일하게 입력해야합니다.'
             ]
           }
         ]
