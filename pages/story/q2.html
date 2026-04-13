@@ -4,9 +4,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <base href="../../">
-  <title>손안의 해와 달</title>
+  <title>마법 부여자</title>
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/question.css">
+  <style>
+    .copy-answer-target {
+      color: #a855f7;
+      font-weight: 700;
+    }
+
+    .enchanter-problem {
+      grid-template-rows: minmax(0, 1fr);
+    }
+
+    .enchanter-problem .problem-content,
+    .enchanter-problem .puzzle-card {
+      height: 100%;
+    }
+
+    .enchanter-problem .puzzle-card {
+      align-content: center;
+      justify-items: center;
+      min-height: 220px;
+      text-align: center;
+    }
+
+    .enchanter-problem .puzzle-card h3 {
+      color: var(--gold-text);
+      font-size: 1.18rem;
+      text-shadow: 2px 2px 0 #000;
+    }
+
+    .enchanter-problem .puzzle-card p {
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+  </style>
 </head>
 <body class="question-page">
   <main class="page-shell" id="question-root">
@@ -23,11 +57,11 @@
     <section class="mc-panel title-board" aria-label="문제 개요">
       <div class="title-art">
         <img id="question-frame" class="pixel-art" src="assets/ui/task_open.png" alt="">
-        <img id="question-icon" class="pixel-art" src="assets/icons/clock_00.png" alt="">
+        <img id="question-icon" class="pixel-art" src="assets/icons/book.png" alt="">
       </div>
       <div class="title-copy">
         <p class="slot-kicker" id="question-category">CATEGORY</p>
-        <h1 id="question-title">손안의 해와 달</h1>
+        <h1 id="question-title">마법 부여자</h1>
         <p id="question-subtitle"></p>
       </div>
       <div class="timer-slot">
@@ -37,19 +71,11 @@
     </section>
 
     <section class="solve-stage" aria-label="문제 풀이 영역">
-      <article class="mc-panel problem-panel">
-        <div class="problem-header">
-          <h2 class="problem-title">PUZZLE</h2>
-          <span class="status-pill">EDIT THIS HTML</span>
-        </div>
+      <article class="mc-panel problem-panel enchanter-problem">
         <div class="problem-content">
           <section class="puzzle-card">
-  <h3>예시 문제</h3>
-  <p>낮과 밤의 흐름을 손안에서 확인할 수 있게 해 주는 아이템을 떠올려 보세요. 정답은 영어 이름입니다.</p>
-</section>
-<section class="puzzle-card">
-  <h3>연출 교체 포인트</h3>
-  <p>이 문제는 지금 단순한 설명형 예시지만, 실제 운영 시에는 이미지 위 숨은 문자, 마우스 오버 요소, JS 퍼즐 등으로 교체하면 됩니다.</p>
+  <h3>마법 부여자의 책</h3>
+  <p>문제의 정답은 <span id="decoy-answer" class="copy-answer-target" data-real-answer="To be, or not to be" data-visible-answer="정답">"정답"</span>입니다.</p>
 </section>
         </div>
       </article>
@@ -60,7 +86,7 @@
         <div class="answer-display">
           <div class="answer-slot">
             <img id="result-frame" class="pixel-art" src="assets/ui/task_open.png" alt="">
-            <img id="result-icon" class="pixel-art" src="assets/icons/clock_00.png" alt="">
+            <img id="result-icon" class="pixel-art" src="assets/icons/book.png" alt="">
           </div>
           <h2 class="answer-title">ANSWER</h2>
         </div>
@@ -91,6 +117,106 @@
   </main>
 
   <script>window.CURRENT_QUESTION_ID = 'story-2';</script>
+  <script>
+    (() => {
+      const decoyAnswer = document.getElementById('decoy-answer');
+      if (!decoyAnswer) return;
+      const realAnswer = decoyAnswer.dataset.realAnswer || '';
+      const visibleAnswer = decoyAnswer.dataset.visibleAnswer || decoyAnswer.textContent || '정답';
+      const quotedVisibleAnswer = `"${visibleAnswer}"`;
+      const hintOutput = document.getElementById('hint-output');
+      const answerPattern = new RegExp(
+        quotedVisibleAnswer.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
+        'g'
+      );
+      let markingHints = false;
+
+      function markHintAnswers() {
+        if (!hintOutput || markingHints) return;
+        markingHints = true;
+
+        try {
+          const textNodes = [];
+          const walker = document.createTreeWalker(hintOutput, NodeFilter.SHOW_TEXT);
+
+          while (walker.nextNode()) {
+            const node = walker.currentNode;
+            if (
+              node.nodeValue.includes(quotedVisibleAnswer) &&
+              !node.parentElement?.classList.contains('copy-answer-target')
+            ) {
+              textNodes.push(node);
+            }
+          }
+
+          textNodes.forEach((node) => {
+            const fragment = document.createDocumentFragment();
+            let lastIndex = 0;
+
+            node.nodeValue.replace(answerPattern, (match, offset) => {
+              fragment.append(node.nodeValue.slice(lastIndex, offset));
+
+              const marker = document.createElement('span');
+              marker.className = 'copy-answer-target';
+              marker.textContent = match;
+              fragment.append(marker);
+
+              lastIndex = offset + match.length;
+              return match;
+            });
+
+            fragment.append(node.nodeValue.slice(lastIndex));
+            node.replaceWith(fragment);
+          });
+        } finally {
+          markingHints = false;
+        }
+      }
+
+      document.addEventListener('copy', (event) => {
+        const selection = window.getSelection();
+        if (!selection || selection.isCollapsed || !event.clipboardData) return;
+        const selectedText = selection.toString();
+        const ranges = Array.from({ length: selection.rangeCount }, (_, index) =>
+          selection.getRangeAt(index)
+        );
+
+        const containsDecoy = ranges.some((range) => range.intersectsNode(decoyAnswer));
+        const containsHint = hintOutput && ranges.some((range) => range.intersectsNode(hintOutput));
+
+        if ((!containsDecoy && !containsHint) || !selectedText.includes(quotedVisibleAnswer)) return;
+
+        event.preventDefault();
+        const trimmedText = selectedText.trim();
+        const clipboardText = trimmedText === quotedVisibleAnswer
+          ? realAnswer
+          : selectedText.split(quotedVisibleAnswer).join(realAnswer);
+        event.clipboardData.setData('text/plain', clipboardText);
+      });
+
+      markHintAnswers();
+      if (hintOutput) {
+        new MutationObserver(markHintAnswers).observe(hintOutput, {
+          childList: true,
+          subtree: true
+        });
+      }
+
+      const answerForm = document.getElementById('answer-form');
+      const answerInput = document.getElementById('answer-input');
+      answerForm?.addEventListener('submit', () => {
+        const typedAnswer = answerInput?.value || '';
+        if (typedAnswer === realAnswer || !window.ARGUtils?.matchesAnswer(typedAnswer, [realAnswer])) return;
+
+        answerInput.value = '__not_exact_answer__';
+        window.setTimeout(() => {
+          if (answerInput.value === '__not_exact_answer__') {
+            answerInput.value = typedAnswer;
+          }
+        }, 0);
+      }, true);
+    })();
+  </script>
   <script src="js/game-data.js"></script>
   <script src="js/utils.js"></script>
   <script src="js/state.js"></script>
