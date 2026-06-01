@@ -27,6 +27,23 @@
     }
   }
 
+  function spawnNoteBurst(x, y, color = 'var(--accent)') {
+    const count = 12;
+    for (let index = 0; index < count; index += 1) {
+      const note = document.createElement('span');
+      note.className = 'click-note';
+      note.textContent = index % 3 === 0 ? '♫' : '♪';
+      note.style.left = `${x}px`;
+      note.style.top = `${y}px`;
+      note.style.setProperty('--dx', `${(Math.random() - 0.5) * 108}px`);
+      note.style.setProperty('--dy', `${(-34 - Math.random() * 72)}px`);
+      note.style.setProperty('--spin', `${(Math.random() - 0.5) * 120}deg`);
+      note.style.setProperty('--pixel-color', color);
+      document.body.appendChild(note);
+      window.setTimeout(() => note.remove(), 780);
+    }
+  }
+
   function flashElement(element) {
     if (!element) return;
     element.classList.remove('flash');
@@ -70,7 +87,12 @@
     document.addEventListener('click', (event) => {
       const target = interactiveTarget(event.target);
       if (!target) return;
-      spawnPixels(event.clientX, event.clientY, target.dataset.pixelColor || 'var(--accent)');
+      const color = target.dataset.pixelColor || 'var(--accent)';
+      if (target.dataset.effectShape === 'note') {
+        spawnNoteBurst(event.clientX, event.clientY, color);
+      } else {
+        spawnPixels(event.clientX, event.clientY, color);
+      }
       window.ARGAudio?.playEffect(target.dataset.soundClick || 'click');
       flashElement(target);
     });
@@ -87,6 +109,7 @@
 
   window.ARGEffects = {
     spawnPixels,
+    spawnNoteBurst,
     showToast,
     flashElement
   };

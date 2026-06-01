@@ -28,6 +28,7 @@
     elements.feedback = document.getElementById('feedback');
     elements.nextLink = document.getElementById('next-link');
     elements.lockedMessage = document.getElementById('locked-message');
+    elements.answerLabel = document.querySelector('label[for="answer-input"]');
     elements.hintStatus = document.getElementById('hint-status');
     elements.hintButtons = document.getElementById('hint-buttons');
     elements.hintOutput = document.getElementById('hint-output');
@@ -52,7 +53,9 @@
     elements.logo.alt = window.ARGData.branding.logoAlt || 'ARG Logo';
     elements.category.textContent = category?.title || 'CATEGORY';
     elements.title.textContent = question.title;
-    elements.subtitle.textContent = `${question.description} · ${window.ARGData.ui.hintRule}`;
+    elements.subtitle.textContent = question.hideSubtitle
+      ? ''
+      : [question.description, window.ARGData.ui.hintRule].filter(Boolean).join(' · ');
     elements.questionFrame.src = getFrameSrc(question.frameType, state.isQuestionSolved(question.id));
     elements.questionIcon.src = question.icon;
     elements.questionIcon.alt = `${question.title} 아이콘`;
@@ -60,6 +63,22 @@
     elements.resultIcon.src = question.icon;
     elements.resultIcon.alt = `${question.title} 아이콘`;
     document.title = `${question.title} · ${window.ARGData.siteTitle}`;
+  }
+
+  function renderAnswerInput(question) {
+    if (elements.answerLabel && question.answerLabel) {
+      elements.answerLabel.textContent = question.answerLabel;
+    }
+
+    if (!elements.answerInput) return;
+
+    if (question.answerLanguage) {
+      elements.answerInput.lang = question.answerLanguage;
+    }
+
+    if (question.answerPlaceholder) {
+      elements.answerInput.placeholder = question.answerPlaceholder;
+    }
   }
 
   function setFeedback(message = '', type = 'info') {
@@ -278,12 +297,109 @@
     });
   }
 
+  let musicAudioContext = null;
+
+  function getMusicAudioContext() {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return null;
+    if (!musicAudioContext) {
+      musicAudioContext = new AudioContext();
+    }
+    return musicAudioContext;
+  }
+
+  function playMusicTone(frequency) {
+    if (window.ARGAudio?.isEnabled && !window.ARGAudio.isEnabled()) return;
+
+    const context = getMusicAudioContext();
+    if (!context) return;
+
+    if (context.state === 'suspended') {
+      context.resume().catch(() => {});
+    }
+
+    const start = context.currentTime;
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+
+    oscillator.type = 'square';
+    oscillator.frequency.setValueAtTime(Number(frequency) || 261.63, start);
+    gain.gain.setValueAtTime(0.0001, start);
+    gain.gain.exponentialRampToValueAtTime(0.18, start + 0.012);
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.34);
+
+    oscillator.connect(gain);
+    gain.connect(context.destination);
+    oscillator.start(start);
+    oscillator.stop(start + 0.36);
+  }
+
+  function playMusicMelody(frequencies, noteMs = 260) {
+    frequencies.forEach((frequency, index) => {
+      window.setTimeout(() => playMusicTone(frequency), index * noteMs);
+    });
+  }
+
+  function shuffleMusicNotes(notes) {
+    const shuffled = [...notes];
+    for (let index = shuffled.length - 1; index > 0; index -= 1) {
+      const swapIndex = Math.floor(Math.random() * (index + 1));
+      [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+    }
+    return shuffled;
+  }
+
+  function mountSoundOfMusicPuzzle(question) {
+    if (question.id !== 'nether-1') return;
+
+    const grid = document.getElementById('music-note-grid');
+    if (!grid) return;
+
+    const notes = Array.from(grid.querySelectorAll('.music-note'));
+    const rainbowOrder = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
+    const twinkleMelody = [261.63, 261.63, 392.00, 392.00, 440.00, 440.00, 392.00];
+    let sequenceIndex = 0;
+    let melodyPlaying = false;
+
+    const fragment = document.createDocumentFragment();
+    shuffleMusicNotes(notes).forEach((button) => fragment.appendChild(button));
+    grid.appendChild(fragment);
+
+    notes.forEach((button) => {
+      button.addEventListener('click', () => {
+        const clickedColor = button.dataset.noteColor;
+        playMusicTone(button.dataset.frequency);
+
+        button.classList.add('played');
+        window.setTimeout(() => button.classList.remove('played'), 160);
+
+        if (clickedColor === rainbowOrder[sequenceIndex]) {
+          sequenceIndex += 1;
+        } else {
+          sequenceIndex = clickedColor === rainbowOrder[0] ? 1 : 0;
+        }
+
+        if (sequenceIndex === rainbowOrder.length && !melodyPlaying) {
+          melodyPlaying = true;
+          sequenceIndex = 0;
+          window.setTimeout(() => {
+            playMusicMelody(twinkleMelody);
+            window.setTimeout(() => {
+              melodyPlaying = false;
+            }, twinkleMelody.length * 260);
+          }, 220);
+        }
+      });
+    });
+  }
+
   function mountQuestion(question) {
     currentQuestion = question;
     activeHintLevel = state.getViewedHintLevels(question.id).slice(-1)[0] || null;
 
     applyTheme(question);
     renderHeader(question);
+    renderAnswerInput(question);
     renderLockState(question);
     renderHints(question);
     renderSolvedState(question);
@@ -322,6 +438,7 @@
 
     bindAudioButton();
     mountQuestion(question);
+    mountSoundOfMusicPuzzle(question);
     handleSubmit(question);
     window.setInterval(updateTotalTimer, 1000);
   });

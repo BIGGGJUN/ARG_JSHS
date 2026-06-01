@@ -44,7 +44,8 @@
       chorusFruit: 'assets/icons/chorus_fruit.png',
       beacon: 'assets/icons/beacon.png',
       bedrock: 'assets/icons/bedrock.png',
-      bookshelf: 'assets/icons/bookshelf.png'
+      bookshelf: 'assets/icons/bookshelf.png',
+      noteBlock: 'assets/icons/note_block.png'
     }
   };
 
@@ -187,18 +188,22 @@
         questions: [
           {
             id: 'nether-1',
-            title: '불꽃 몹의 막대',
-            shortTitle: 'BLAZE ROD',
-            description: '네더 요새의 대표 전리품을 맞히는 예시 문제.',
+            title: 'Sound of music',
+            shortTitle: 'NOTE BLOCK',
+            description: '노트블럭의 비밀을 푸는 문제.',
+            hideSubtitle: true,
             file: 'pages/nether/q1.html',
-            icon: ASSETS.icons.blazeRod,
+            icon: ASSETS.icons.noteBlock,
             frameType: 'task',
-            acceptedAnswers: ['BLAZE ROD'],
+            acceptedAnswers: ['작은 별', '작은별', '반짝반짝 작은 별'],
+            answerLanguage: 'ko',
+            answerLabel: '정답 입력',
+            answerPlaceholder: '한글로 입력',
             prerequisiteIds: [],
             hints: [
-              '네더 요새에서 만나는 몹이 떨어뜨립니다.',
-              '엔더의 눈과 포션 재료로 이어지는 재료입니다.',
-              '정답은 영어 2단어, BLAZE ROD 입니다.'
+              '위치보다 색의 순서가 중요합니다.',
+              '빨주노초파남보 순서로 누르면 도 도 솔 솔 라 라 솔이 들립니다.',
+              '그 멜로디로 시작하는 동요의 제목을 한글로 입력하세요.'
             ]
           },
           {
