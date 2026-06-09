@@ -147,13 +147,16 @@
   function renderHints(question) {
     const thresholds = getHintThresholds();
     const attempts = state.getAttempts(question.id);
+    const alwaysShowHints = Boolean(question.alwaysShowHints);
 
-    elements.hintStatus.textContent = `오답 ${attempts}회 · 해금 조건 ${thresholds.join(' / ')}회`;
+    elements.hintStatus.textContent = alwaysShowHints
+      ? '힌트 열림'
+      : `오답 ${attempts}회 · 해금 조건 ${thresholds.join(' / ')}회`;
     elements.hintButtons.innerHTML = '';
 
     question.hints.forEach((hint, index) => {
       const level = index + 1;
-      const unlocked = state.isHintUnlocked(question.id, level);
+      const unlocked = alwaysShowHints || state.isHintUnlocked(question.id, level);
       const viewed = state.hasViewedHint(question.id, level);
 
       const button = document.createElement('button');
@@ -161,7 +164,7 @@
       button.className = `hint-slot ${unlocked ? 'unlocked' : 'locked'} ${viewed ? 'viewed' : ''} ${activeHintLevel === level ? 'active' : ''}`;
       button.innerHTML = `
         <span class="hint-slot-top">HINT ${toRoman(level)}</span>
-        <span class="hint-slot-bottom">${thresholds[index]}x</span>
+        <span class="hint-slot-bottom">${alwaysShowHints ? 'OPEN' : `${thresholds[index]}x`}</span>
       `;
 
       if (!unlocked) {

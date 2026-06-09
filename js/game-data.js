@@ -42,6 +42,7 @@
       cauldron: 'assets/icons/cauldron.png',
       chicken: 'assets/icons/chicken.png',
       chorusFruit: 'assets/icons/chorus_fruit.png',
+      fishingRod: 'assets/icons/fishing_rod.png',
       beacon: 'assets/icons/beacon.png',
       bedrock: 'assets/icons/bedrock.png',
       bookshelf: 'assets/icons/bookshelf.png',
@@ -208,18 +209,19 @@
           },
           {
             id: 'nether-2',
-            title: '막대가 가루가 되면',
-            shortTitle: 'BLAZE POWDER',
-            description: '막대를 가공했을 때 얻는 연금술 재료를 묻는 예시 문제.',
+            title: '강태공이 세월을 낚듯',
+            shortTitle: 'FISHING ROD',
+            description: '시간은 인생처럼 흘러갑니다. 인생은 시간처럼 흘러갑니다.',
             file: 'pages/nether/q2.html',
-            icon: ASSETS.icons.campfire,
+            icon: ASSETS.icons.fishingRod,
             frameType: 'challenge',
-            acceptedAnswers: ['BLAZE POWDER'],
+            acceptedAnswers: ['시간'],
             prerequisiteIds: ['nether-1'],
+            alwaysShowHints: true,
             hints: [
-              '막대를 그대로 쓰지 않고 분쇄한 형태입니다.',
-              '포션 양조와 엔드 진입에 쓰이는 가루입니다.',
-              '정답은 영어 2단어, BLAZE POWDER 입니다.'
+              '시간이 가면...',
+              '과연 기다려야 할까요?',
+              '컴퓨터 시간을 바꿔보세요'
             ]
           }
         ]
